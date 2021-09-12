@@ -2,13 +2,39 @@ import React, { Component } from "react";
 import "./estilo.css"
 
 class FormularioCadastro extends Component {
+
+  constructor(props){
+    super(props);
+    this.titulo = "";
+    this.texto = "";
+  }
+
+  _handleMudancaTitulo(evento)
+  {
+    this.titulo = evento.target.value;
+  }
+
+  _handleMudancaTexto(evento)
+  {
+    this.texto = evento.target.value;
+  }
+
+  _criarCard(evento)
+  {
+    evento.preventDefault();
+    evento.stopPropagation();
+    //console.log(`Nova nota` + this.titulo +" "+ this.texto);
+    this.props.criarNota(this.titulo, this.texto);
+  }
+
   render() {
     return (
-      <form>
-        <input type="text" placeholder="Titulo" />
-        <input type="text" placeholder="Cesar" />
-        <textarea placeholder="Escreva sua nota" />
-        <button>Criar nota</button>
+      <form className="form-cadastro" onSubmit={this._criarCard.bind(this)}>
+        <input type="text" placeholder="Titulo" className="form-cadastro_input"
+        onChange={this._handleMudancaTitulo.bind(this)}/>
+        <textarea rows="15" placeholder="Escreva sua nota" className="form-cadastro_input"
+        onChange={this._handleMudancaTexto.bind(this)} />
+        <button className="form-cadastro_submit form-cadastro_input">Criar nota</button>
       </form>
     );
   }
